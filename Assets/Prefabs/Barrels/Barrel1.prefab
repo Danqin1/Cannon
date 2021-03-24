@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1762579769776783426}
   - component: {fileID: 8205280129854306066}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,7 @@ MonoBehaviour:
   - {fileID: 4436343537940439411}
   - {fileID: 6546783942302193953}
   - {fileID: 5118166946098884159}
+  meshRenderer: {fileID: 1762579769778553510}
 --- !u!1 &1762579769776561252
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ GameObject:
   - component: {fileID: 1762579769777553516}
   - component: {fileID: 1762579769778553516}
   - component: {fileID: 1762579769774469836}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object078
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +163,7 @@ GameObject:
   - component: {fileID: 1762579769777553508}
   - component: {fileID: 1762579769778553508}
   - component: {fileID: 1762579769774469828}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere020
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +259,7 @@ GameObject:
   - component: {fileID: 1762579769777553510}
   - component: {fileID: 1762579769778553510}
   - component: {fileID: 1762579769774469830}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere019
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5639506371939122216}
   - component: {fileID: 6546783942302193953}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -396,7 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4232367213760786988}
   - component: {fileID: 4436343537940439411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5941347962612440384}
   - component: {fileID: 5118166946098884159}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

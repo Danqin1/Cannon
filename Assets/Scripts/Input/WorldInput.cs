@@ -1,15 +1,25 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class WorldInput : MonoBehaviour
 {
+    public event Action onTakePhoto;
+    
     [SerializeField] private CameraController cameraController;
 
     private void Update()
     {
         OnCameraMovement(new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical")));
+        
         if (Input.mouseScrollDelta.magnitude > 0)
         {
             OnCameraZoom(Input.mouseScrollDelta);
+        }
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            StartCoroutine(Exit());
         }
     }
 
@@ -21,5 +31,12 @@ public class WorldInput : MonoBehaviour
     private void OnCameraZoom(Vector2 zoom)
     {
         cameraController.Zoom(zoom.y > 0);
+    }
+
+    private IEnumerator Exit()
+    {
+        onTakePhoto?.Invoke();
+        yield return null;
+        ApplicationController.LoadMainMenu();
     }
 }

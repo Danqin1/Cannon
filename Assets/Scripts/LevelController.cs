@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityTemplateProjects;
 
@@ -8,6 +9,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private CannonPartsDatabase database;
     [SerializeField] private HUD hud;
 
+    private CannonMaterialsHandler cannonMaterialsHandler;
     private CannonPart spawnedBarrel;
     private CannonPart spawnedWheel1;
     private CannonPart spawnedWheel2;
@@ -20,29 +22,101 @@ public class LevelController : MonoBehaviour
     
     #endregion
 
+    #region properties
+
+    public int CurrentCannonId => id;
+    public string CurrentImagePath { get; set; }
+
+    #endregion
+
     #region unity methods
 
     private void Start()
     {
-        SubscribeToEvents();
+        CannonInfo info = null;
+        
         if (ApplicationController.ChosenNewCannon)
         {
             SpawnRandomCannon();
         }
-        else if (!ApplicationController.CannonsMemento.Equals(default(CannonsMemento)))
+        else if (ApplicationController.CannonsMemento != null 
+                 && ApplicationController.CannonsMemento.cannons.Count > ApplicationController.ChosenCannonIndex)
         {
-            RestoreCannon(ApplicationController.CannonsMemento.cannons[ApplicationController.ChosenCannonIndex]);
+            info = ApplicationController.CannonsMemento.cannons[ApplicationController.ChosenCannonIndex];
+            RestoreCannon(info);
         }
         else
         {
             SpawnRandomCannon();
         }
+
+        cannonMaterialsHandler = new CannonMaterialsHandler(new List<CannonPart>()
+        {
+            spawnedBarrel,
+            spawnedStand,
+            spawnedWheel1,
+            spawnedWheel2
+        });
+
+        if (info != null)
+        {
+            cannonMaterialsHandler.RestoreColors(info.partsColors);
+        }
+
+        SubscribeToEvents();
+        UpdateCannonsInfo();
     }
 
     private void OnDestroy()
     {
-        SaveSystem.Save(CreateMemento());
+        SaveSystem.Save();
         DisposeFromEvents();
+    }
+
+    #endregion
+
+    #region public methods
+
+    public void UpdateCannonsInfo()
+    {
+        var cannon = ApplicationController.CannonsMemento.cannons.Find(x => x.cannonId == id);
+        
+        if (cannon != null)
+        {
+            cannon.barrelIndex = currentBarrelIndex;
+            cannon.standIndex = currentStandIndex;
+            cannon.wheelsIndex = currentWheelsIndex;
+            if (CurrentImagePath != null)
+            {
+                cannon.imagePath = CurrentImagePath;
+            }
+
+            cannon.partsColors = new List<Color>()
+            {
+                spawnedBarrel.Mesh.material.color,
+                spawnedStand.Mesh.material.color,
+                spawnedWheel1.Mesh.material.color,
+                spawnedWheel2.Mesh.material.color
+            };
+        }
+        else
+        {
+            ApplicationController.CannonsMemento.cannons.Add(new CannonInfo()
+            {
+                cannonId = id,
+                barrelIndex = currentBarrelIndex,
+                standIndex = currentStandIndex,
+                wheelsIndex = currentWheelsIndex,
+                imagePath = CurrentImagePath,
+                partsColors = new List<Color>()
+                {
+                    spawnedBarrel.Mesh.material.color,
+                    spawnedStand.Mesh.material.color,
+                    spawnedWheel1.Mesh.material.color,
+                    spawnedWheel2.Mesh.material.color
+                }
+            });
+        }
     }
 
     #endregion
@@ -55,6 +129,7 @@ public class LevelController : MonoBehaviour
         hud.onChangeBarrel += OnBarrelChanged;
         hud.onChangeStand += OnChangeStand;
         hud.onChangeWheel += OnChangeWheels;
+        hud.onChangeRandomColor += OnColorChange;
     }
 
     private void DisposeFromEvents()
@@ -63,12 +138,14 @@ public class LevelController : MonoBehaviour
         hud.onChangeBarrel += OnBarrelChanged;
         hud.onChangeStand += OnBarrelChanged;
         hud.onChangeWheel += OnBarrelChanged;
+        hud.onChangeRandomColor -= OnColorChange;
     }
 
     private void RestoreCannon(CannonInfo infos)
     {
-        int spawnedWheelsCount = 0;
+        int restoredWheels = 0;
         spawnedBarrel = Instantiate(database.Barrels[infos.barrelIndex]);
+        id = infos.cannonId;
         CannonPart part = spawnedBarrel;
         
         spawnedBarrel.Sockets.ForEach(x =>
@@ -77,9 +154,8 @@ public class LevelController : MonoBehaviour
                 {
                     case CannonPartType.Wheel:
                         part = Instantiate(database.Wheels[infos.wheelsIndex]);
-                        spawnedWheelsCount++;
-               
-                        if (spawnedWheel1 == null)
+
+                        if (restoredWheels == 0)
                         {
                             spawnedWheel1 = part;
                         }
@@ -87,15 +163,20 @@ public class LevelController : MonoBehaviour
                         {
                             spawnedWheel2 = part;
                         }
+                        restoredWheels++;
                         break;
                     case CannonPartType.Stand:
                         part = Instantiate(database.Stands[infos.standIndex]);
+                        spawnedStand = part;
                         break;
                 }
 
                 part.transform.position = x.transform.position;
                 part.transform.rotation = x.transform.rotation;
             });
+        currentBarrelIndex = infos.barrelIndex;
+        currentWheelsIndex = infos.wheelsIndex;
+        currentStandIndex = infos.standIndex;
     }
     
     private void OnChangeWheels()
@@ -109,9 +190,8 @@ public class LevelController : MonoBehaviour
                currentWheelsIndex = spawnedWheelsCount == 0 ? (currentWheelsIndex + 1) % database.Wheels.Count : currentWheelsIndex;
                
                var part = Instantiate(database.Wheels[currentWheelsIndex], w.transform.position, w.transform.rotation);
-               spawnedWheelsCount++;
                
-               if (spawnedWheel1 == null)
+               if (spawnedWheelsCount == 0)
                {
                    spawnedWheel1 = part;
                }
@@ -119,7 +199,9 @@ public class LevelController : MonoBehaviour
                {
                    spawnedWheel2 = part;
                }
+               spawnedWheelsCount++;
            });
+       UpdateCannonMaterialsHandler();
     }
 
     private void OnChangeStand()
@@ -132,6 +214,7 @@ public class LevelController : MonoBehaviour
                 currentStandIndex = (currentStandIndex + 1) % database.Stands.Count;
                 spawnedStand = Instantiate(database.Stands[currentStandIndex], w.transform.position, w.transform.rotation);
             });
+        UpdateCannonMaterialsHandler();
     }
 
     private void OnBarrelChanged()
@@ -171,6 +254,7 @@ public class LevelController : MonoBehaviour
                     transformToSet.rotation = x.transform.rotation;
                 }
             });
+        UpdateCannonMaterialsHandler();
     }
 
     private void OnGenerateNewCannon()
@@ -187,10 +271,18 @@ public class LevelController : MonoBehaviour
         spawnedStand = null;
 
         SpawnRandomCannon();
+        UpdateCannonMaterialsHandler();
+    }
+
+    private void OnColorChange()
+    {
+        cannonMaterialsHandler.ChangeColorToRandom();
+        UpdateCannonsInfo();
     }
 
     private void SpawnRandomCannon()
     {
+        int spawnedWheels = 0;
         var dataResponse = database.GetRandomPart(CannonPartType.Barrel);
         currentBarrelIndex = dataResponse.index;
         spawnedBarrel = Instantiate(dataResponse.part, Vector3.zero, Quaternion.identity);
@@ -212,7 +304,7 @@ public class LevelController : MonoBehaviour
             switch (spawnedPart.Type)
             {
                 case CannonPartType.Wheel:
-                    if (spawnedWheel1 == null)
+                    if (spawnedWheels == 0)
                     {
                         spawnedWheel1 = spawnedPart;
                         currentWheelsIndex = dataResponse.index;
@@ -221,6 +313,7 @@ public class LevelController : MonoBehaviour
                     {
                         spawnedWheel2 = spawnedPart;
                     }
+                    spawnedWheels++;
                     break;
                 
                 case CannonPartType.Stand:
@@ -231,7 +324,7 @@ public class LevelController : MonoBehaviour
         });
 
         CreateID();
-        AddToCannons();
+        UpdateCannonMaterialsHandler();
     }
 
     private void DestroyWheels()
@@ -248,32 +341,16 @@ public class LevelController : MonoBehaviour
         id = gameObject.GetHashCode();
     }
 
-    private void AddToCannons()
+    private void UpdateCannonMaterialsHandler()
     {
-        ApplicationController.CannonsMemento.cannons.Add(new CannonInfo()
+        cannonMaterialsHandler?.UpdateParts(new List<CannonPart>
         {
-            cannonId = id,
-            barrelIndex = currentBarrelIndex,
-            standIndex = currentStandIndex,
-            wheelsIndex = currentWheelsIndex
+            spawnedBarrel,
+            spawnedStand,
+            spawnedWheel1,
+            spawnedWheel2
         });
-    }
-
-    private CannonsMemento CreateMemento()
-    {
-        var savedCannon = ApplicationController.CannonsMemento.cannons.Find(x => x.cannonId == id);
-        if (!savedCannon.Equals(default))
-        {
-            savedCannon.barrelIndex = currentBarrelIndex;
-            savedCannon.standIndex = currentStandIndex;
-            savedCannon.wheelsIndex = currentWheelsIndex;
-        }
-        else
-        {
-            AddToCannons();
-        }
-
-        return ApplicationController.CannonsMemento;
+        UpdateCannonsInfo();
     }
 
     #endregion

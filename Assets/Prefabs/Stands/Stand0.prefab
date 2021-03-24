@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5318394106381495766}
   - component: {fileID: 5318394106377199030}
   - component: {fileID: 4745191644047232639}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stand0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,3 +111,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   sockets: []
+  meshRenderer: {fileID: 5318394106381495766}

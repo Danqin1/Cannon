@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3090746365417948331}
   - component: {fileID: 3090746365416851051}
   - component: {fileID: 3090746365421221387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tube018
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 3090746365417948335}
   - component: {fileID: 3090746365416851055}
   - component: {fileID: 3090746365421221391}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere021
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 3090746365417948343}
   - component: {fileID: 3090746365416851063}
   - component: {fileID: 3090746365421221399}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object079
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3090746365419275413}
   - component: {fileID: -6664913343861498017}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wheel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   sockets: []
+  meshRenderer: {fileID: 3090746365416851051}
 --- !u!1 &3090746365419116731
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +350,7 @@ GameObject:
   - component: {fileID: 3090746365417948349}
   - component: {fileID: 3090746365416851069}
   - component: {fileID: 3090746365421221405}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder052
   m_TagString: Untagged
   m_Icon: {fileID: 0}

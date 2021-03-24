@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6361627238719474738}
   - component: {fileID: 3733561979241576794}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2687918802286987762}
   - component: {fileID: 7798994853832722462}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 4495939769216502883}
   - component: {fileID: 4495939769215405731}
   - component: {fileID: 4495939769219448515}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Box033
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 4495939769216502889}
   - component: {fileID: 4495939769215405737}
   - component: {fileID: 4495939769219448521}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder101
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4495939769213635665}
   - component: {fileID: 5413361955595160666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,6 +336,7 @@ MonoBehaviour:
   - {fileID: 3733561979241576794}
   - {fileID: 7798994853832722462}
   - {fileID: 7827093441987065064}
+  meshRenderer: {fileID: 4495939769215405737}
 --- !u!1 &4495939769213145207
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +349,7 @@ GameObject:
   - component: {fileID: 4495939769216502895}
   - component: {fileID: 4495939769215405743}
   - component: {fileID: 4495939769219448527}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object158
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +445,7 @@ GameObject:
   - component: {fileID: 4495939769216502897}
   - component: {fileID: 4495939769215405745}
   - component: {fileID: 4495939769219448529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object159
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +541,7 @@ GameObject:
   - component: {fileID: 4495939769216502903}
   - component: {fileID: 4495939769215405751}
   - component: {fileID: 4495939769219448535}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere106
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4614567469293097165}
   - component: {fileID: 7827093441987065064}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

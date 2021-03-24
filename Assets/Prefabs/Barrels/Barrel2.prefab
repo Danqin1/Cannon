@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 366199875364952224}
   - component: {fileID: 2654595490605735892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,6 +56,7 @@ MonoBehaviour:
   - {fileID: 7368671164474600491}
   - {fileID: 3927430222514306793}
   - {fileID: 3562733093592941744}
+  meshRenderer: {fileID: 366199875363052120}
 --- !u!1 &366199875364979846
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,7 +69,7 @@ GameObject:
   - component: {fileID: 366199875364182158}
   - component: {fileID: 366199875363052110}
   - component: {fileID: 366199875358698030}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object092
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +165,7 @@ GameObject:
   - component: {fileID: 366199875364182168}
   - component: {fileID: 366199875363052120}
   - component: {fileID: 366199875358698040}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere032
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +261,7 @@ GameObject:
   - component: {fileID: 366199875364182170}
   - component: {fileID: 366199875363052122}
   - component: {fileID: 366199875358698042}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere033
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +357,7 @@ GameObject:
   - component: {fileID: 366199875364182144}
   - component: {fileID: 366199875363052096}
   - component: {fileID: 366199875358698016}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object093
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +453,7 @@ GameObject:
   - component: {fileID: 366199875364182146}
   - component: {fileID: 366199875363052098}
   - component: {fileID: 366199875358698018}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object094
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -546,7 +547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3685269478826940971}
   - component: {fileID: 3927430222514306793}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,7 +591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8249609716352030340}
   - component: {fileID: 3562733093592941744}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8182464479811392461}
   - component: {fileID: 7368671164474600491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Socket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
