@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldInput : MonoBehaviour
 {
-    public event Action onTakePhoto;
+    public event Action onExit;
     
     [SerializeField] private CameraController cameraController;
 
@@ -35,7 +35,7 @@ public class WorldInput : MonoBehaviour
 
     private IEnumerator Exit()
     {
-        onTakePhoto?.Invoke();
+        onExit?.Invoke();
         yield return null;
         ApplicationController.LoadMainMenu();
     }

@@ -34,7 +34,8 @@ public class LevelController : MonoBehaviour
     private void Start()
     {
         CannonInfo info = null;
-        
+        cannonMaterialsHandler = new CannonMaterialsHandler(new List<CannonPart>());
+
         if (ApplicationController.ChosenNewCannon)
         {
             SpawnRandomCannon();
@@ -49,15 +50,8 @@ public class LevelController : MonoBehaviour
         {
             SpawnRandomCannon();
         }
-
-        cannonMaterialsHandler = new CannonMaterialsHandler(new List<CannonPart>()
-        {
-            spawnedBarrel,
-            spawnedStand,
-            spawnedWheel1,
-            spawnedWheel2
-        });
-
+        
+        UpdateCannonMaterialsHandler(false);
         if (info != null)
         {
             cannonMaterialsHandler.RestoreColors(info.partsColors);
@@ -77,7 +71,7 @@ public class LevelController : MonoBehaviour
 
     #region public methods
 
-    public void UpdateCannonsInfo()
+    public void UpdateCannonsInfo(bool overwriteColors = true)
     {
         var cannon = ApplicationController.CannonsMemento.cannons.Find(x => x.cannonId == id);
         
@@ -91,13 +85,16 @@ public class LevelController : MonoBehaviour
                 cannon.imagePath = CurrentImagePath;
             }
 
-            cannon.partsColors = new List<Color>()
+            if (overwriteColors)
             {
-                spawnedBarrel.Mesh.material.color,
-                spawnedStand.Mesh.material.color,
-                spawnedWheel1.Mesh.material.color,
-                spawnedWheel2.Mesh.material.color
-            };
+                cannon.partsColors = new List<Color>()
+                {
+                    spawnedBarrel.Mesh.material.color,
+                    spawnedStand.Mesh.material.color,
+                    spawnedWheel1.Mesh.material.color,
+                    spawnedWheel2.Mesh.material.color
+                };
+            }
         }
         else
         {
@@ -290,7 +287,7 @@ public class LevelController : MonoBehaviour
         spawnedBarrel.Sockets.ForEach(x =>
         {
             CannonPart spawnedPart = null;
-            if (x.Type == CannonPartType.Wheel && spawnedWheel1 != null)
+            if (x.Type == CannonPartType.Wheel && spawnedWheels != 0)
             {
                 dataResponse.part = database.Wheels[currentWheelsIndex];
             }
@@ -341,7 +338,7 @@ public class LevelController : MonoBehaviour
         id = gameObject.GetHashCode();
     }
 
-    private void UpdateCannonMaterialsHandler()
+    private void UpdateCannonMaterialsHandler(bool overwriteColors = true)
     {
         cannonMaterialsHandler?.UpdateParts(new List<CannonPart>
         {
@@ -350,7 +347,7 @@ public class LevelController : MonoBehaviour
             spawnedWheel1,
             spawnedWheel2
         });
-        UpdateCannonsInfo();
+        UpdateCannonsInfo(overwriteColors);
     }
 
     #endregion

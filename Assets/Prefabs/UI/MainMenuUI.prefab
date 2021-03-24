@@ -628,7 +628,7 @@ MonoBehaviour:
   newCannon: {fileID: 290597265917093688}
   loadCannons: {fileID: 290597265879826023}
   cannonCardsContainer: {fileID: 290597264552308636}
-  card: {fileID: 393264914795792328, guid: 3948efe4c942fe448a1189a3c916adcc, type: 3}
+  cardPrefab: {fileID: 393264914795792328, guid: 3948efe4c942fe448a1189a3c916adcc, type: 3}
   exit: {fileID: 290597264282751392}
 --- !u!1 &290597264782421145
 GameObject:

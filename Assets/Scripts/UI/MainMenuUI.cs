@@ -12,7 +12,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button newCannon;
     [SerializeField] private Button loadCannons;
     [SerializeField] private GameObject cannonCardsContainer;
-    [SerializeField] private CannonUICard card;
+    [SerializeField] private CannonUICard cardPrefab;
     [SerializeField] private Button exit;
 
     private readonly List<CannonUICard> cannonUICards = new List<CannonUICard>();
@@ -91,14 +91,14 @@ public class MainMenuUI : MonoBehaviour
         int cardID = 0;
         foreach (var cannonInfo in ApplicationController.CannonsMemento.cannons)
         {
-            var spawnedCard = Instantiate(card, cannonCardsContainer.transform);
+            var spawnedCard = Instantiate(cardPrefab, cannonCardsContainer.transform);
             spawnedCard.InitializeCard(cannonInfo, cardID);
             cardID++;
             cannonUICards.Add(spawnedCard);
         }
     }
 
-    private void DeleteCannon(int id, GameObject cardObject)
+    private void DeleteCannon(int id, CannonUICard card)
     {
         var cannon = ApplicationController.CannonsMemento.cannons.Find(x => x.cannonId == id);
         if (cannon != null)
@@ -107,10 +107,23 @@ public class MainMenuUI : MonoBehaviour
             {
                 File.Delete(cannon.imagePath);
             }
-            
-            Destroy(cardObject);
+
+            cannonUICards.Remove(card);
+            Destroy(card.gameObject);
             ApplicationController.CannonsMemento.cannons.Remove(cannon);
         }
+
+        UpdateCardsIndexes();
+    }
+
+    private void UpdateCardsIndexes()
+    {
+        int index = 0;
+        cannonUICards.ForEach(x =>
+        {
+            x.CardId = index;
+            index++;
+        });
     }
     
     #endregion

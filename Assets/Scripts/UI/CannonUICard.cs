@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CannonUICard : MonoBehaviour
 {
     public event Action<int> onCustomize;
-    public event Action<int, GameObject> onDelete;
+    public event Action<int, CannonUICard> onDelete;
     
     [SerializeField] private Image cannonImage;
     [SerializeField] private Button customizeButton;
@@ -13,23 +13,24 @@ public class CannonUICard : MonoBehaviour
     [SerializeField] private Sprite defaultSprite;
     
     private int cannonID;
-    private int cardId;
+    
+    public int CardId { get; set; }
 
     private void Start()
     {
-        customizeButton.onClick.AddListener(() => onCustomize?.Invoke(cardId));
-        deleteButton.onClick.AddListener(() => onDelete?.Invoke(cannonID, gameObject));
+        customizeButton.onClick.AddListener(() => onCustomize?.Invoke(CardId));
+        deleteButton.onClick.AddListener(() => onDelete?.Invoke(cannonID, this));
     }
 
     private void OnDestroy()
     {
-        customizeButton.onClick.RemoveListener(() => onCustomize?.Invoke(cardId));
-        deleteButton.onClick.RemoveListener(() => onDelete?.Invoke(cannonID, gameObject));
+        customizeButton.onClick.RemoveListener(() => onCustomize?.Invoke(CardId));
+        deleteButton.onClick.RemoveListener(() => onDelete?.Invoke(cannonID, this));
     }
 
     public void InitializeCard(CannonInfo info, int cardID)
     {
-        cardId = cardID;
+        CardId = cardID;
         cannonID = info.cannonId;
         var image = FileUtilities.LoadPNG(info.imagePath, (int)cannonImage.preferredWidth, (int)cannonImage.preferredHeight);
         if (image != null)

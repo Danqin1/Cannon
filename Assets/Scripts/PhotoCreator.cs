@@ -13,13 +13,13 @@ public class PhotoCreator : MonoBehaviour
 	private void Start()
 	{
 		hud.onTakePhoto += OnTakePhoto;
-		worldInput.onTakePhoto += OnTakePhoto;
+		worldInput.onExit += OnTakePhoto;
 	}
 
 	private void OnDestroy()
 	{
 		hud.onTakePhoto -= OnTakePhoto;
-		worldInput.onTakePhoto -= OnTakePhoto;
+		worldInput.onExit -= OnTakePhoto;
 	}
 
 	private void OnTakePhoto()
